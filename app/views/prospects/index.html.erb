@@ -1,0 +1,17 @@
+<h1>Prospects</h1>
+<table class="table">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @prospects.each do |prospect| %>
+    <tr>
+      <td><%= prospect.name %></td>
+      <td><%= prospect.description %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
