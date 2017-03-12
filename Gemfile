@@ -47,6 +47,7 @@ group :development, :test do
   gem "database_cleaner"
   gem "poltergeist"
   gem "shoulda-matchers"
+  gem "factory_girl_rails", require: false
 end
 
 group :development do
