@@ -22,7 +22,9 @@ require "capybara/rspec"
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
+require "support/matchers"
 Dir[Rails.root.join('spec/support/*.rb')].each { |file| require file }
+Dir[Rails.root.join("spec/support/factories/*.rb")].each do |file| require file end
 
 # Checks for pending migration and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
@@ -33,6 +35,8 @@ DatabaseCleaner.clean_with(:deletion)
 FactoryGirl.lint
 
 RSpec.configure do |config|
+  config.include FactoryGirl::Syntax::Methods
+  config.include ActiveSupport::Testing::TimeHelpers
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.

@@ -18,7 +18,7 @@ class Experience
   end
 
   def page
-    @page ||= OpsApp::Session.next(driver: driver)
+    @page ||= ProspectsConsumer::Session.next(driver: driver)
   end
 end
 
