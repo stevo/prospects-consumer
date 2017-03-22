@@ -6,6 +6,10 @@ module Capabilities
           click_on "Prospects"
         end
       end
+
+      def download_prospects
+        click_on 'Import prospects'
+      end
     end
   end
 end
