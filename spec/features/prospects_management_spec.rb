@@ -24,7 +24,7 @@ RSpec.describe "Prospects management" do
     behavior 'Admin downloads prospects with "Import Prospects" button' do
       admin_ux.download_prospects
 
-      expect(admin_ux).to have_content("1 new prospect was imported")
+      expect(admin_ux).to have_flash_notice("1 new prospect was imported")
 
       expect(admin_ux).to have_table_row_contents("Captain America", "Needs new shield", "true", position: 1)
       expect(admin_ux).to have_table_row_contents("Iron Man", "Does want suit upgrade", "true", position: 2)
@@ -50,7 +50,7 @@ RSpec.describe "Prospects management" do
     behavior 'Admin downloads prospects with "Import Prospects" button' do
       admin_ux.download_prospects
 
-      expect(admin_ux).to have_content("2 new prospects were imported")
+      expect(admin_ux).to have_flash_notice("2 new prospects were imported")
 
       expect(admin_ux).to have_table_row_contents("Thor", "Nordic God", "false", position: 1)
       expect(admin_ux).to have_table_row_contents("Black Widow", "Russian Killing Machine", "true", position: 2)
