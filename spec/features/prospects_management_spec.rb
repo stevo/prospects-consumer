@@ -47,7 +47,7 @@ RSpec.describe "Prospects management" do
       ]
     end
 
-    behavior 'Admin downloads prospects with "Import Prospects" button' do
+    behavior 'Admin downloads more prospects with "Import Prospects" button' do
       admin_ux.download_prospects
 
       expect(admin_ux).to have_flash_notice("2 new prospects were imported")
