@@ -30,7 +30,7 @@ RSpec.describe "Prospects management" do
       expect(admin_ux).to have_table_row_contents("Iron Man", "Does want suit upgrade", "true", position: 2)
     end
 
-    allow(ProspectApiWrapper).to receive(:get_prospects) do
+    allow(ProspectApiWrapper).to(receive(:get_prospects)) {
       [
         { name: "Thor",
           description: "Nordic God",
@@ -45,7 +45,7 @@ RSpec.describe "Prospects management" do
           target: true,
           uid: 88 }
       ]
-    end
+    }
 
     behavior 'Admin downloads more prospects with "Import Prospects" button' do
       admin_ux.download_prospects

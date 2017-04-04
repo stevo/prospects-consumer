@@ -6,40 +6,35 @@ class ProspectApiWrapper
   SUCCESS = 200
 
   def self.get_prospects
-    response = get('prospects')
+    prospects = get('prospects')
 
-    if success?(response)
-      prospects = JSON.parse(response.body).with_indifferent_access
-
-      prospects.fetch(:data).map do |prospect_data|
-        prospect_data_fetch = prospect_data.fetch(:attributes)
-        {
-          name: prospect_data_fetch.fetch(:name),
-          description: prospect_data_fetch.fetch(:description),
-          uid: prospect_data.fetch(:id),
-          target: calculate_target(prospect_data_fetch.fetch(:country))
-        }
-      end
+    prospects.fetch(:data).map do |prospect_data|
+      prospect_data_fetch = prospect_data.fetch(:attributes)
+      {
+        name: prospect_data_fetch.fetch(:name),
+        description: prospect_data_fetch.fetch(:description),
+        uid: prospect_data.fetch(:id),
+        target: calculate_target(prospect_data_fetch.fetch(:country))
+      }
     end
   end
 
-  private_class_method
+  def self.get(path)
+    response = RestClient.get([BASE_URL, path].join, { params: { api_key: API_KEY } })
 
-  def self.get(url)
-    RestClient.get [BASE_URL, url].join, { params: { api_key: API_KEY } }
+    if success?(response)
+      JSON.parse(response.body).with_indifferent_access
+    end
   end
 
   def self.calculate_target(code)
-    response = get("markets/#{code}")
-
-    if success?(response)
-      market = JSON.parse(response.body).symbolize_keys
-
-      market.fetch(:population) > 50_000_000 && market.fetch(:growth_potential) == 'high'
-    end
+    market = get("markets/#{code}")
+    market.fetch(:population) > 50_000_000 && market.fetch(:growth_potential) == 'high'
   end
 
   def self.success?(response)
     response.code == SUCCESS
   end
+
+  private_class_method :get, :calculate_target, :success?
 end

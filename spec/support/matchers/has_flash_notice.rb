@@ -12,7 +12,7 @@ module Support
       def matches?(page)
         @page = page
 
-        has_matching_row?
+        has_flash_notice?
       end
 
       def description
@@ -31,7 +31,7 @@ module Support
 
       attr_reader :page, :text
 
-      def has_matching_row?
+      def has_flash_notice?
         page.within('.notice') do
           page.has_content?(text)
         end
