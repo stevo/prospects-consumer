@@ -1,5 +1,5 @@
 class ProspectsController < ApplicationController
   def index
-    @prospects = Prospect.all
+    @prospects = Prospect.order(id: :desc)
   end
 end

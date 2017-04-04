@@ -3,4 +3,8 @@ Rails.application.routes.draw do
   resources :prospects
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root "dashboard#show"
+
+  namespace :import do
+    resource :prospects, only: :create
+  end
 end

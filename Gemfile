@@ -45,11 +45,11 @@ group :development, :test do
   gem "rspec-expectations"
   gem "rspec-rails"
   gem "capybara"
-  gem "capybara-webkit", "~> 1.12.0"
   gem "database_cleaner"
   gem "poltergeist"
   gem "shoulda-matchers"
   gem "factory_girl_rails", require: false
+  gem 'rest-client'
 end
 
 group :development do
