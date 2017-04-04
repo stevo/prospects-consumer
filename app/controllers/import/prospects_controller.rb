@@ -3,7 +3,7 @@ module Import
     include ActionView::Helpers::TextHelper
 
     def create
-      prospects = ProspectApiWrapper.get_prospects
+      prospects = ProspectApiWrapper.instance.get_prospects
       created_prospects = Prospect.create(prospects.reverse)
       size = created_prospects.select(&:id).count
 

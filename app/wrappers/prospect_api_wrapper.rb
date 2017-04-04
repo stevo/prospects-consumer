@@ -1,11 +1,12 @@
 class ProspectApiWrapper
   require 'rest-client'
+  include Singleton
 
   API_KEY = ENV['PROSPECTS_API_KEY'].freeze
   BASE_URL = 'http://prospects-api.herokuapp.com/'.freeze
   SUCCESS = 200
 
-  def self.get_prospects
+  def get_prospects
     prospects = get('prospects')
 
     prospects.fetch(:data).map do |prospect_data|
@@ -19,7 +20,9 @@ class ProspectApiWrapper
     end
   end
 
-  def self.get(path)
+  private
+
+  def get(path)
     response = RestClient.get([BASE_URL, path].join, { params: { api_key: API_KEY } })
 
     if success?(response)
@@ -29,16 +32,14 @@ class ProspectApiWrapper
     end
   end
 
-  def self.calculate_target(code)
+  def calculate_target(code)
     market = get("markets/#{code}")
     market.fetch(:population) > 50_000_000 && market.fetch(:growth_potential) == 'high'
   end
 
-  def self.success?(response)
+  def success?(response)
     response.code == SUCCESS
   end
-
-  private_class_method :get, :calculate_target, :success?
 
   class WrongResponseCodeError < StandardError
     def initialize(code)

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ProspectApiWrapper do
-  describe '.get_prospects' do
+  describe '#get_prospects' do
     it 'returns prospect attributes from API' do
       stub_const 'ProspectApiWrapper::API_KEY', 'abc'
 
@@ -49,7 +49,7 @@ RSpec.describe ProspectApiWrapper do
           )
         )
 
-      result = ProspectApiWrapper.get_prospects
+      result = ProspectApiWrapper.instance.get_prospects
 
       expect(RestClient).to have_received(:get).
         with(
@@ -81,7 +81,7 @@ RSpec.describe ProspectApiWrapper do
           ).
           and_return(double(code: 404))
 
-        expect { ProspectApiWrapper.get_prospects }.
+        expect { ProspectApiWrapper.instance.get_prospects }.
           to raise_error ProspectApiWrapper::WrongResponseCodeError, 'Wrong response code: 404'
       end
     end

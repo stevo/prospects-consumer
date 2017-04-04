@@ -5,7 +5,7 @@ RSpec.describe "Prospects management" do
   scenario do
     create(:prospect, name: "Iron Man", description: "Does want suit upgrade", target: true, uid: 87)
 
-    allow(ProspectApiWrapper).to receive(:get_prospects) do
+    allow(ProspectApiWrapper.instance).to receive(:get_prospects) do
       [
         { name: "Captain America",
           description: "Needs new shield",
@@ -30,7 +30,7 @@ RSpec.describe "Prospects management" do
       expect(admin_ux).to have_table_row_contents("Iron Man", "Does want suit upgrade", "true", position: 2)
     end
 
-    allow(ProspectApiWrapper).to(receive(:get_prospects)) {
+    allow(ProspectApiWrapper.instance).to(receive(:get_prospects)) {
       [
         { name: "Thor",
           description: "Nordic God",
