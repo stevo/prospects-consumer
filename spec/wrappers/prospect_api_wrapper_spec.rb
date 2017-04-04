@@ -69,5 +69,21 @@ RSpec.describe ProspectApiWrapper do
                               target: true
                             }])
     end
+
+    context 'response code is not 200' do
+      it 'raises an error' do
+        stub_const 'ProspectApiWrapper::API_KEY', 'abc'
+
+        allow(RestClient).to receive(:get).
+          with(
+            'http://prospects-api.herokuapp.com/prospects',
+            { params: { api_key: 'abc' } }
+          ).
+          and_return(double(code: 404))
+
+        expect { ProspectApiWrapper.get_prospects }.
+          to raise_error ProspectApiWrapper::WrongResponseCodeError, 'Wrong response code: 404'
+      end
+    end
   end
 end

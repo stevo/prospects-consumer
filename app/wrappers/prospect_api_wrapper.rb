@@ -24,6 +24,8 @@ class ProspectApiWrapper
 
     if success?(response)
       JSON.parse(response.body).with_indifferent_access
+    else
+      raise WrongResponseCodeError.new(response.code)
     end
   end
 
@@ -37,4 +39,10 @@ class ProspectApiWrapper
   end
 
   private_class_method :get, :calculate_target, :success?
+
+  class WrongResponseCodeError < StandardError
+    def initialize(code)
+      super("Wrong response code: #{code}")
+    end
+  end
 end
