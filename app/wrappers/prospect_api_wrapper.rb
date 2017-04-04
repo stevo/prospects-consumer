@@ -1,7 +1,7 @@
 class ProspectApiWrapper
   require 'rest-client'
 
-  API_KEY = 'a2d2142ae77ee3ff86fd6ac644e339d9'.freeze
+  API_KEY = ENV['PROSPECTS_API_KEY'].freeze
   BASE_URL = 'http://prospects-api.herokuapp.com/'.freeze
   SUCCESS = 200
 
