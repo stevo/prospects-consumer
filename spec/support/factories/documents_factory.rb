@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :document do
+    cv
     sequence(:title) { |n| "Document ##{n}"}
     sequence(:body) { |n| "Document ##{n} body"}
     creator { create(:user) }
