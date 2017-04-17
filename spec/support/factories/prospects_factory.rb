@@ -4,5 +4,6 @@ FactoryGirl.define do
     sequence(:uid) { |i| i.to_s }
     description "Prospect description"
     target false
+    owner { create(:user) }
   end
 end
