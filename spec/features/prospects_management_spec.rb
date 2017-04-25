@@ -5,12 +5,12 @@ RSpec.describe "Prospects management" do
   scenario do
     create(:prospect, name: "Iron Man", description: "Does want suit upgrade", target: true, uid: 87)
 
-    allow(ProspectApiWrapper.instance).to receive(:get_prospects) do
+    allow(ProspectApiWrapper).to receive(:get_prospects) do
       [
-        { name: "Captain America",
-          description: "Needs new shield",
-          target: true,
-          uid: 88 }
+        ApiProspect.new(name: "Captain America",
+                        description: "Needs new shield",
+                        target: true,
+                        uid: 88)
       ]
     end
 
@@ -30,20 +30,20 @@ RSpec.describe "Prospects management" do
       expect(admin_ux).to have_table_row_contents("Iron Man", "Does want suit upgrade", "true", position: 2)
     end
 
-    allow(ProspectApiWrapper.instance).to(receive(:get_prospects)) {
+    allow(ProspectApiWrapper).to(receive(:get_prospects)) {
       [
-        { name: "Thor",
-          description: "Nordic God",
-          target: false,
-          uid: 90 },
-        { name: "Black Widow",
-          description: "Russian Killing Machine",
-          target: true,
-          uid: 89 },
-        { name: "Captain America",
-          description: "Needs new shield",
-          target: true,
-          uid: 88 }
+        ApiProspect.new(name: "Thor",
+                        description: "Nordic God",
+                        target: false,
+                        uid: 90),
+        ApiProspect.new(name: "Black Widow",
+                        description: "Russian Killing Machine",
+                        target: true,
+                        uid: 89),
+        ApiProspect.new(name: "Captain America",
+                        description: "Needs new shield",
+                        target: true,
+                        uid: 88)
       ]
     }
 

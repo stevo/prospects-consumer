@@ -2,33 +2,38 @@ class ProspectApiWrapper
   require 'rest-client'
   include Singleton
 
-  API_KEY = ENV['PROSPECTS_API_KEY'].freeze
   BASE_URL = 'http://prospects-api.herokuapp.com/'.freeze
-  SUCCESS = 200
+  SUCCESS_CODE = 200
+
+  WrongResponseCodeException = Class.new(StandardError)
+
+  class << self
+    delegate :get_prospects, to: :instance
+  end
 
   def get_prospects
     prospects = get('prospects')
 
     prospects.fetch(:data).map do |prospect_data|
       prospect_data_fetch = prospect_data.fetch(:attributes)
-      {
+      ApiProspect.new(
         name: prospect_data_fetch.fetch(:name),
         description: prospect_data_fetch.fetch(:description),
         uid: prospect_data.fetch(:id),
         target: calculate_target(prospect_data_fetch.fetch(:country))
-      }
+      )
     end
   end
 
   private
 
   def get(path)
-    response = RestClient.get([BASE_URL, path].join, { params: { api_key: API_KEY } })
+    response = RestClient.get([BASE_URL, path].join, { params: { api_key: ENV.fetch('PROSPECTS_API_KEY') } })
 
     if success?(response)
       JSON.parse(response.body).with_indifferent_access
     else
-      raise WrongResponseCodeError.new(response.code)
+      raise WrongResponseCodeException.new(response.code)
     end
   end
 
@@ -38,12 +43,6 @@ class ProspectApiWrapper
   end
 
   def success?(response)
-    response.code == SUCCESS
-  end
-
-  class WrongResponseCodeError < StandardError
-    def initialize(code)
-      super("Wrong response code: #{code}")
-    end
+    response.code == SUCCESS_CODE
   end
 end

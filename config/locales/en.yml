@@ -21,3 +21,6 @@
 
 en:
   hello: "Hello world"
+  new_prospect_was_imported:
+    one: "1 new prospect was imported"
+    other: "%{count} new prospects were imported"

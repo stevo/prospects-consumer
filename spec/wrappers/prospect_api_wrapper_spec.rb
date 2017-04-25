@@ -3,8 +3,6 @@ require 'rails_helper'
 RSpec.describe ProspectApiWrapper do
   describe '#get_prospects' do
     it 'returns prospect attributes from API' do
-      stub_const 'ProspectApiWrapper::API_KEY', 'abc'
-
       allow(RestClient).to receive(:get).
         with(
           'http://prospects-api.herokuapp.com/prospects',
@@ -49,7 +47,13 @@ RSpec.describe ProspectApiWrapper do
           )
         )
 
-      result = ProspectApiWrapper.instance.get_prospects
+      result = ProspectApiWrapper.get_prospects
+
+      expect(result.size).to eq(1)
+      expect(result.first.attributes).to eq(name: 'Captain America',
+                                            description: 'Needs new shield',
+                                            uid: 40,
+                                            target: true)
 
       expect(RestClient).to have_received(:get).
         with(
@@ -61,28 +65,14 @@ RSpec.describe ProspectApiWrapper do
           'http://prospects-api.herokuapp.com/markets/jp',
           { params: { api_key: 'abc' } }
         )
-
-      expect(result).to eq([{
-                              name: 'Captain America',
-                              description: 'Needs new shield',
-                              uid: '40',
-                              target: true
-                            }])
     end
 
     context 'response code is not 200' do
       it 'raises an error' do
-        stub_const 'ProspectApiWrapper::API_KEY', 'abc'
+        allow(RestClient).to receive(:get).and_return(double(code: 404))
 
-        allow(RestClient).to receive(:get).
-          with(
-            'http://prospects-api.herokuapp.com/prospects',
-            { params: { api_key: 'abc' } }
-          ).
-          and_return(double(code: 404))
-
-        expect { ProspectApiWrapper.instance.get_prospects }.
-          to raise_error ProspectApiWrapper::WrongResponseCodeError, 'Wrong response code: 404'
+        expect { ProspectApiWrapper.get_prospects }.
+          to raise_error ProspectApiWrapper::WrongResponseCodeException, '404'
       end
     end
   end

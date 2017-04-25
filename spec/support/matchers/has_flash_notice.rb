@@ -32,10 +32,9 @@ module Support
       attr_reader :page, :text
 
       def has_flash_notice?
-        page.within('.notice') do
-          page.has_content?(text)
-        end
+        page.find(".notice", exact_text: text)
       rescue Capybara::ElementNotFound
+        false
       end
     end
   end

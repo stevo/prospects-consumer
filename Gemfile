@@ -49,7 +49,7 @@ group :development, :test do
   gem "poltergeist"
   gem "shoulda-matchers"
   gem "factory_girl_rails", require: false
-  gem 'rest-client'
+  gem "rest-client"
 end
 
 group :development do
