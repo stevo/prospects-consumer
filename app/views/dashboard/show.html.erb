@@ -1,1 +1,24 @@
 <h1>Dashboard</h1>
+<h2>Project timeline</h2>
+
+<ul>
+  <% @prospects.each do |prospect| %>
+    <li>
+      <%= prospect.first %>
+      <% prospect.second.each_pair do |author, documents| %>
+        <ul>
+          <li>
+            <strong><%= author %></strong>
+          </li>
+        </ul>
+        <ol>
+          <% documents.each do |document| %>
+            <li>
+              <%= document %>
+            </li>
+          <% end %>
+        </ol>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
