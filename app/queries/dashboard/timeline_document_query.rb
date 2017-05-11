@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Dashboard::TimelineDocumentQuery < Patterns::Query
   queries Document
 

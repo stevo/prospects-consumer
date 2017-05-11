@@ -1,11 +1,10 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 require 'support/capabilities/admin/dashboard'
 
 RSpec.describe 'Prospects management' do
   scenario do
-    create(:prospect, name: 'Iron Man', description: 'Does want suit upgrade', target: true)
+    prospect = create(:prospect, name: 'Iron Man', description: 'Does want suit upgrade', target: true)
+    create(:document, title: "CV Dariusz Whylon", created_at: "2017-04-17", prospect: prospect)
 
     behavior 'Admin sees prospects' do
       admin_ux.navigate_to_dashboard

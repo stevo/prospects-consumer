@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Support
   module Matchers
     def have_document_row_content(*text, position: nil)
@@ -57,7 +55,6 @@ module Support
 
       def has_matching_row?
         scoped_page
-        # rescue Capybara::ElementNotFound
       end
 
       def scoped_page

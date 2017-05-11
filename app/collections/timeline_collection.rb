@@ -14,6 +14,7 @@ class TimelineCollection
   private
 
   def items
+    return Array.new if dates_group.empty?
     (min_date.to_date..max_date.to_date).map do |date|
       [date.to_s, author_documents(date).first || {}]
     end

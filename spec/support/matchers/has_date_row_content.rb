@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Support
   module Matchers
     def have_date_row_content(*text, position: nil)
