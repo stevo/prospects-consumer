@@ -6,7 +6,9 @@ class TimelineCollection
   end
 
   def each(&block)
-    items.map { |item| yield(item) }
+    items.map do |item|
+      yield(item)
+    end
   end
 
   private

@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe TimelineCollection do
   describe '#each' do
     it 'Display all dates between as empty entries, grouped by customer and descending order' do
-      create(:document, title: "document", created_at: "2017-04-01")
-      create(:document, title: "document-2", created_at: "2017-04-01")
-      create(:document, title: "document-3", created_at: "2017-04-03")
+      prospect = create(:prospect, name: 'Tony')
+      create(:document, title: "document", created_at: "2017-04-01", prospect: prospect)
+      create(:document, title: "document-2", created_at: "2017-04-01", prospect: prospect)
+      create(:document, title: "document-3", created_at: "2017-04-03", prospect: prospect)
 
       array = TimelineCollection.new(Document.all)
 
